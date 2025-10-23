@@ -18,9 +18,9 @@ class ToastSystem {
     }
 
     injectStyles() {
-    if (this.stylesInjected) return;
+        if (this.stylesInjected) return;
 
-    const styles = `
+        const styles = `
         .toast-container {
             position: fixed;
             z-index: 9999;
@@ -51,7 +51,7 @@ class ToastSystem {
             min-width: 200px;
             opacity: 0;
             transform: translateX(100%);
-            transition: all 0.35s ease-in-out;
+            transition: all 0.3s ease-in-out;
             position: relative;
             pointer-events: auto;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -67,7 +67,6 @@ class ToastSystem {
             transform: translateX(100%);
         }
 
-        /* --- Estilos de color --- */
         .toast.success { border-left-color: #28a745; }
         .toast.error { border-left-color: #dc3545; }
         .toast.warning { border-left-color: #ffc107; }
@@ -91,7 +90,9 @@ class ToastSystem {
         .toast.warning .toast-icon { background-color: #ffc107; }
         .toast.info .toast-icon { background-color: #17a2b8; }
 
-        .toast-content { flex: 1; }
+        .toast-content {
+            flex: 1;
+        }
 
         .toast-title {
             font-weight: bold;
@@ -144,36 +145,42 @@ class ToastSystem {
         .toast.warning .toast-progress { background-color: #ffc107; }
         .toast.info .toast-progress { background-color: #17a2b8; }
 
-        /* --- Versión responsive: animación desde arriba hacia abajo --- */
-        @media (max-width: 480px) {
-            .toast-container.top,
-            .toast-container.bottom {
-                right: 10px;
-                left: 10px;
-                max-width: none;
-            }
+        /* --- MODO RESPONSIVE: animación de arriba hacia abajo --- */
+       @media (max-width: 480px) {
+    .toast-container.top,
+    .toast-container.bottom {
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        max-width: 90%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-            .toast {
-                width: 100%;
-                min-width: auto;
-                transform: translateY(-100%);
-            }
+    .toast {
+        width: 100%;
+        min-width: auto;
+        transform: translateY(-120%);
+    }
 
-            .toast.show {
-                transform: translateY(0);
-            }
+    .toast.show {
+        transform: translateY(0);
+    }
 
-            .toast.hide {
-                transform: translateY(-100%);
-            }
-        }
+    .toast.hide {
+        transform: translateY(-120%);
+    }
+}
+
     `;
 
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = styles;
-    document.head.appendChild(styleSheet);
-    this.stylesInjected = true;
-}
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = styles;
+        document.head.appendChild(styleSheet);
+        this.stylesInjected = true;
+    }
 
     createContainer() {
         let selector = `.toast-container.${this.position}`;
